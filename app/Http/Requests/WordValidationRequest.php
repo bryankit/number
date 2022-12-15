@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NumberValidationRequest extends FormRequest
+class WordValidationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class NumberValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|int'
+            'words' => 'required|string'
         ];
     }
 }

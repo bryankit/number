@@ -15,5 +15,6 @@ use App\Http\Controllers\NumberController;
 */
 
 Route::controller(NumberController::class)->group(function() {
-    Route::post('convert', 'getNumber');
+    Route::post('convertWord', 'getNumber');
+    Route::post('convertNumber', 'getWord');
 });

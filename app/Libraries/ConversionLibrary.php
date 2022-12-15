@@ -41,8 +41,7 @@ class ConversionLibrary
         'sixteen'   => 16,
         'seventeen' => 17,
         'eighteen'  => 18,
-        'nineteen'  => 19,
-        'twenty'  => 19
+        'nineteen'  => 19
     ];
 
     /**
@@ -67,11 +66,69 @@ class ConversionLibrary
     ];
 
     /**
+     * const ONESNUMBER array
+     */
+    const ONESNUMBER = [
+        '',
+        'one',
+        'two' ,
+        'three',
+        'four',
+        'five',
+        'six' ,
+        'seven',
+        'eight',
+        'nine',
+    ];
+
+    /**
+     * const TENSNUMBER array
+     */
+    const OTHERNUMBER = [
+        '',
+        'one',
+        'two',
+        'three',
+        'four',
+        'five',
+        'six',
+        'seven',
+        'eight',
+        'nine',
+        'ten',
+        'eleven',
+        'twelve',
+        'thirteen',
+        'fourteen',
+        'fifteen',
+        'sixteen',
+        'seventeen',
+        'eighteen',
+        'nineteen'
+    ];
+
+    /**
+     * const TENSNUMBER array
+     */
+    const TENSNUMBER = [
+        '',
+        '',
+        'twenty',
+        'thirty',
+        'forty' ,
+        'fifty',
+        'sixty',
+        'seventy',
+        'eighty',
+        'ninety',
+    ];
+
+    /**
      * Convert To Number
      * @param string $word
-     * @return int
+     * @return int | string
      */
-    public static function convertToNumber($words)
+    public static function convertToNumber($words) : int | string
     {
         $newWord = explode(' ', preg_replace('!\s+!', ' ', $words));
         $maxWord = count($newWord) - 1;
@@ -83,13 +140,13 @@ class ConversionLibrary
                 $total = self::ONES[$newWord[$currentWord]];
                 $currentWord++;
             } else {
-                $total = 'invalid first word : ' . $newWord[$currentWord];
+                return 'invalid first word : ' . $newWord[$currentWord];
             }
         } elseif ($maxWord === $currentWord) {
             if (in_array($newWord[$currentWord], array_keys(self::TENS))) {
                 return self::TENS[$newWord[$currentWord]];
             } else {
-                $total = 'invalid  first word : ' . $newWord[$currentWord];
+                return 'invalid  first word : ' . $newWord[$currentWord];
             }
         }
 
@@ -98,7 +155,7 @@ class ConversionLibrary
                 $total = (int)$total * self::MULTIPLIER[$newWord[$currentWord]];
                 $currentWord++;
             } else {
-                $total = 'invalid hundreds word : ' . $newWord[$currentWord];
+                return 'invalid hundreds word : ' . $newWord[$currentWord];
             }
         }
 
@@ -111,7 +168,7 @@ class ConversionLibrary
                     return (int)$total + self::TENS[$newWord[$currentWord]];
                 }
             } else {
-                $total = 'invalid third word : ' . $newWord[$currentWord];
+                return 'invalid third word : ' . $newWord[$currentWord];
             }
         }
 
@@ -119,7 +176,7 @@ class ConversionLibrary
             if (in_array($newWord[$currentWord], array_keys(self::ONES))) {
                 return (int)$total + self::ONES[$newWord[$currentWord]];
             } else {
-                $total = 'invalid fourth word : ' . $newWord[$currentWord];
+                return 'invalid fourth word : ' . $newWord[$currentWord];
             }
         }
         
@@ -127,14 +184,37 @@ class ConversionLibrary
     }
 
     /**
-     * Get ones 
-     * @param string $word
-     * @return int
+     * Convert To Word 
+     * @param string $number
+     * @return int | string
      */
-    public static function getFirstDigit($wordOnes)
+    public static function convertToWord($number)
     {
-        $newWord = explode(' ', $wordOnes);
-        
-        return $newWord;
+        $newNumber = str_split($number);
+        $numberDigit = strlen($number);
+        if($numberDigit === 1) {
+            return self::ONESNUMBER[$number];
+        }
+
+        if($numberDigit === 2) {
+            if($number >= 10 && $number <= 19 ){
+                return self::OTHERNUMBER[$number];
+            } else {
+                return self::TENSNUMBER[$newNumber[0]] . ' ' . self::ONESNUMBER[$newNumber[1]];
+            }
+        }
+
+        if($numberDigit === 3) {
+            $hundreds = self::ONESNUMBER[$newNumber[0]];
+            $tens = self::TENSNUMBER[$newNumber[1]];
+            $ones = self::ONESNUMBER[$newNumber[2]];
+            array_shift($newNumber);
+            $newTens = join('', $newNumber);    
+            if($newTens >= 10 && $newTens <= 19){
+                return $hundreds . ' hundred ' . self::OTHERNUMBER[$newTens];
+            } else {
+                return $hundreds . ' hundred ' . $tens . ' ' . $ones;
+            }
+        }
     }
 }
