@@ -14,7 +14,7 @@
         <div class="input-group"><span class="input-group-text">₱</span><input type="text" class="form-control" placeholder="Enter a number in words" id="wordValue"><button class="btn btn-outline-secondary" type="button" onclick="getConversionToNumber()">Convert to number</button></div><br>
         <h3 class="text-center">Number to Word Conversion</h3>
         <h1 class="text-center card-title mb-3" id="answerWord"></h1>
-        <div class="input-group"><span class="input-group-text">₱</span><input type="text" class="form-control" placeholder="Enter number" id="numberValue"><button class="btn btn-outline-secondary" type="button" onclick="getConversionToWords()">Convert to number</button></div>
+        <div class="input-group"><span class="input-group-text">₱</span><input type="text" class="form-control" placeholder="Enter number" id="numberValue"><button class="btn btn-outline-secondary" type="button" onclick="getConversionToWords()">Convert to word</button></div>
       </div>
     </div>
     <script>
